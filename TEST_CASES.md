@@ -72,7 +72,9 @@ Expected result:
 
 - The setup value is 2 minutes.
 - While running, Pause, Reset, and remaining-time controls are visible.
+- The Start control is not available while the timer is running.
 - After pausing, Start and Reset controls are visible.
+- The Pause control is not available while the timer is paused.
 
 ## TC-05: Record and Reset a Stopwatch Lap
 
@@ -91,6 +93,8 @@ Steps:
 Expected result:
 
 - Running controls include Pause, Lap, and Reset.
+- The Start control is not available while the stopwatch is running.
 - `Lap 1` is recorded.
 - Pausing displays the Start control.
+- The Pause control is not available while the stopwatch is paused.
 - Reset removes the recorded lap and returns the stopwatch to its initial state.

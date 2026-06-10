@@ -50,10 +50,12 @@ describe('Pixel Clock', () => {
     await expect(timerScreen.pauseButton).toBeDisplayed();
     await expect(timerScreen.resetButton).toBeDisplayed();
     await expect(timerScreen.remainingTime).toBeDisplayed();
+    await expect(timerScreen.startButton).not.toExist();
 
     await timerScreen.pauseButton.click();
     await expect(timerScreen.startButton).toBeDisplayed();
     await expect(timerScreen.resetButton).toBeDisplayed();
+    await expect(timerScreen.pauseButton).not.toExist();
   });
 
   it('TC-05 records and resets a stopwatch lap', async () => {
@@ -63,12 +65,14 @@ describe('Pixel Clock', () => {
     await expect(stopwatchScreen.pauseButton).toBeDisplayed();
     await expect(stopwatchScreen.lapButton).toBeDisplayed();
     await expect(stopwatchScreen.resetButton).toBeDisplayed();
+    await expect(stopwatchScreen.startButton).not.toExist();
 
     await stopwatchScreen.lapButton.click();
     await expect(stopwatchScreen.firstLap).toBeDisplayed();
 
     await stopwatchScreen.pauseButton.click();
     await expect(stopwatchScreen.startButton).toBeDisplayed();
+    await expect(stopwatchScreen.pauseButton).not.toExist();
 
     await stopwatchScreen.resetButton.click();
     await expect(stopwatchScreen.startButton).toBeDisplayed();
