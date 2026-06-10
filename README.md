@@ -1,5 +1,7 @@
 # Pixel Clock Appium Tests
 
+[![BrowserStack Appium](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/workflows/browserstack.yml/badge.svg)](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/workflows/browserstack.yml)
+
 Mobile automation test project for the native Android Pixel Clock app, built with WebdriverIO, Appium, TypeScript, BrowserStack App Automate, GitHub Actions, and Allure reports.
 
 ## Application Under Test
@@ -92,6 +94,15 @@ npm run allure:open
 ```
 
 In CI, the generated Allure report is uploaded as a GitHub Actions artifact.
+
+## Evidence
+
+- GitHub Actions run: [BrowserStack Appium #5](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/runs/27279688569)
+- BrowserStack public build: [Pixel Clock GitHub Actions CI 27279688569](https://app-automate.browserstack.com/dashboard/v2/public-build/cVN3OXo4Q09hczdQQ1NoelV3b3E4d0dVTnAxMmlIUGt3VGZScktKRzE3Y3V5MTF0bGVsMHp6V0pPNGpUMWxxb2lkbzVmMEhIeW5Ed0NkcHZIV3E2bXc9PS0tb1hJOTIvZjRIUGpubEZra0V4bUt2Zz09--5645d76131c962564a608d8db339a87637b5388e)
+
+![GitHub Actions success](./docs/github-actions-success.png)
+
+![BrowserStack build success](./docs/browserstack-build-success.png)
 
 ## Useful Commands
 
