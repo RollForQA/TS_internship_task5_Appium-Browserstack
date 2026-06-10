@@ -1,8 +1,8 @@
 {
-  "name": "fossify-clock-appium-tests",
+  "name": "pixel-clock-appium-tests",
   "version": "1.0.0",
   "private": true,
-  "description": "Mobile automation tests for Fossify Clock using WebdriverIO, Appium, and TypeScript.",
+  "description": "Mobile automation tests for Pixel Clock using WebdriverIO, Appium, and TypeScript.",
   "scripts": {
     "test:local": "wdio run ./wdio.local.conf.ts",
     "test:browserstack": "wdio run ./wdio.browserstack.conf.ts",

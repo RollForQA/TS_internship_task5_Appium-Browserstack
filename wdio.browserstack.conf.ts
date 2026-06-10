@@ -24,7 +24,8 @@ export const config: WebdriverIO.Config = {
     [
       'browserstack',
       {
-        app: appId
+        app: appId,
+        testObservability: false
       }
     ]
   ],
@@ -38,6 +39,9 @@ export const config: WebdriverIO.Config = {
       'appium:noReset': false,
       'appium:language': 'en',
       'appium:locale': 'US',
+      'appium:settings': {
+        waitForIdleTimeout: 100
+      },
       'bstack:options': {
         deviceName: process.env.BROWSERSTACK_DEVICE ?? 'Samsung Galaxy S23',
         osVersion: process.env.BROWSERSTACK_OS_VERSION ?? '13.0',

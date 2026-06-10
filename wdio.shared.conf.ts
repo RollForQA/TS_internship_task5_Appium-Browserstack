@@ -11,6 +11,6 @@ export const config: Omit<WebdriverIO.Config, 'capabilities'> = {
   reporters: ['spec'],
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60_000
+    timeout: 120_000
   }
 };

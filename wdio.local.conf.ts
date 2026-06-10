@@ -23,6 +23,9 @@ export const config: WebdriverIO.Config = {
       'appium:appPackage': 'com.google.android.deskclock',
       'appium:appActivity': 'com.android.deskclock.DeskClock',
       'appium:noReset': true,
+      'appium:settings': {
+        waitForIdleTimeout: 100
+      },
       'appium:newCommandTimeout': 120
     }
   ]

@@ -68,6 +68,14 @@ Deliverables:
 - BrowserStack App Automate run.
 - GitHub Actions run with BrowserStack credentials from secrets.
 
+Implemented test cases are documented in [TEST_CASES.md](./TEST_CASES.md):
+
+- main-screen navigation;
+- alarm creation;
+- alarm label editing;
+- timer start and pause;
+- stopwatch lap and reset.
+
 ## Application Under Test
 
 Native Pixel Clock included in the Android 14 emulator system image.
