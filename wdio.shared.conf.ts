@@ -8,9 +8,24 @@ export const config: Omit<WebdriverIO.Config, 'capabilities'> = {
   connectionRetryTimeout: 120_000,
   connectionRetryCount: 1,
   framework: 'mocha',
-  reporters: ['spec'],
+  reporters: [
+    'spec',
+    [
+      'allure',
+      {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false
+      }
+    ]
+  ],
   mochaOpts: {
     ui: 'bdd',
     timeout: 120_000
+  },
+  afterTest: async function (test, context, { error, result, duration, passed, retries }) {
+    if (!passed) {
+      await browser.takeScreenshot();
+    }
   }
 };

@@ -35,3 +35,25 @@ jobs:
 
       - name: Run Appium tests on BrowserStack
         run: npm run test:browserstack
+
+      - name: Generate Allure Report
+        if: always()
+        run: npm run allure:generate
+
+      - name: Upload Allure Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: 5. Appium/allure-report/
+          retention-days: 14
+
+      - name: Upload Test Logs & Screenshots Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-logs-screenshots
+          path: |
+            5. Appium/logs/
+            5. Appium/log/
+          retention-days: 14
