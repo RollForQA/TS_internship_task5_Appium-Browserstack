@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: 5. Appium/allure-report/
+          path: allure-report/
           retention-days: 14
 
       - name: Upload Test Logs & Screenshots Artifact
@@ -54,6 +54,6 @@ jobs:
         with:
           name: appium-logs-screenshots
           path: |
-            5. Appium/logs/
-            5. Appium/log/
+            logs/
+            log/
           retention-days: 14
