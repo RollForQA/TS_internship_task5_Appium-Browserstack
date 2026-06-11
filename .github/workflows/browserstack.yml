@@ -36,6 +36,45 @@ jobs:
       - name: Run Appium tests on BrowserStack
         run: npm run test:browserstack
 
+      - name: Publish failed test details
+        if: failure()
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+
+          const resultsDirectory = 'allure-results';
+          if (!fs.existsSync(resultsDirectory)) {
+            console.log('::error title=BrowserStack test failure::No Allure results were generated.');
+            process.exit(0);
+          }
+
+          const failures = fs.readdirSync(resultsDirectory)
+            .filter((file) => file.endsWith('-result.json'))
+            .map((file) => JSON.parse(fs.readFileSync(path.join(resultsDirectory, file), 'utf8')))
+            .filter((result) => result.status === 'failed' || result.status === 'broken');
+
+          if (failures.length === 0) {
+            console.log('::error title=BrowserStack test failure::The WDIO process failed without a failed Allure test result.');
+          }
+
+          for (const failure of failures) {
+            const details = failure.statusDetails || {};
+            const message = [details.message, details.trace]
+              .filter(Boolean)
+              .join('\n')
+              .replaceAll('%', '%25')
+              .replaceAll('\r', '%0D')
+              .replaceAll('\n', '%0A');
+            const title = String(failure.name || 'BrowserStack test failure')
+              .replaceAll('%', '%25')
+              .replaceAll('\r', '%0D')
+              .replaceAll('\n', '%0A');
+            console.log(`::error title=${title}::${message || failure.status}`);
+          }
+          NODE
+
       - name: Generate Allure Report
         if: always()
         run: npm run allure:generate
