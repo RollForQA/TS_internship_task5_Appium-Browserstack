@@ -50,9 +50,10 @@ class TimerScreen {
   }
 
   async getRemainingSeconds(): Promise<number> {
-    await this.remainingTime.waitForDisplayed();
+    const remainingTime = this.remainingTime;
+    await remainingTime.waitForDisplayed();
     const description =
-      (await this.remainingTime.getAttribute('content-desc')) ?? '';
+      (await remainingTime.getAttribute('content-desc')) ?? '';
     const seconds = parseDurationInSeconds(description);
 
     if (seconds === 0 && !description.match(/\b0\s*seconds?\b/i)) {

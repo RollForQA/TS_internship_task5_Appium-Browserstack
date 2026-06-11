@@ -30,8 +30,9 @@ class StopwatchScreen {
   }
 
   async getElapsedDisplay(): Promise<string> {
-    await this.timeText.waitForDisplayed();
-    return this.timeText.getText();
+    const timeText = this.timeText;
+    await timeText.waitForDisplayed();
+    return timeText.getText();
   }
 
   async waitForElapsedTimeChange(initialDisplay: string): Promise<string> {
@@ -53,8 +54,9 @@ class StopwatchScreen {
   }
 
   async hasNonZeroFirstLapTime(): Promise<boolean> {
-    await this.firstLapTime.waitForDisplayed();
-    const digits = (await this.firstLapTime.getText()).match(/\d/g) ?? [];
+    const firstLapTime = this.firstLapTime;
+    await firstLapTime.waitForDisplayed();
+    const digits = (await firstLapTime.getText()).match(/\d/g) ?? [];
     return digits.some((digit) => digit !== '0');
   }
 }
