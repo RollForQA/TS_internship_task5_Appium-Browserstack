@@ -124,14 +124,14 @@ In CI, the generated Allure report is uploaded as a GitHub Actions artifact.
 
 ## Evidence
 
-- Latest verified GitHub Actions run for the committed suite: [BrowserStack Appium #7](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/runs/27281515047)
-- Example BrowserStack public build: [Pixel Clock GitHub Actions CI 27279688569](https://app-automate.browserstack.com/dashboard/v2/public-build/cVN3OXo4Q09hczdQQ1NoelV3b3E4d0dVTnAxMmlIUGt3VGZScktKRzE3Y3V5MTF0bGVsMHp6V0pPNGpUMWxxb2lkbzVmMEhIeW5Ed0NkcHZIV3E2bXc9PS0tb1hJOTIvZjRIUGpubEZra0V4bUt2Zz09--5645d76131c962564a608d8db339a87637b5388e)
+- Latest verified GitHub Actions run for the committed suite: [BrowserStack Appium #12](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/runs/27340721469)
+- Historical BrowserStack public build: [Pixel Clock GitHub Actions CI 27279688569](https://app-automate.browserstack.com/dashboard/v2/public-build/cVN3OXo4Q09hczdQQ1NoelV3b3E4d0dVTnAxMmlIUGt3VGZScktKRzE3Y3V5MTF0bGVsMHp6V0pPNGpUMWxxb2lkbzVmMEhIeW5Ed0NkcHZIV3E2bXc9PS0tb1hJOTIvZjRIUGpubEZra0V4bUt2Zz09--5645d76131c962564a608d8db339a87637b5388e)
 
-The screenshots below show an earlier successful cloud execution; use the links above for live status.
+The GitHub Actions screenshot shows the latest successful BrowserStack run. The Allure screenshot was generated from a clean local emulator run with all five tests passing.
 
-![GitHub Actions success](./docs/github-actions-success.png)
+![GitHub Actions and BrowserStack success](./docs/github-actions-success.png)
 
-![BrowserStack build success](./docs/browserstack-build-success.png)
+![Allure report with five passing tests](./docs/allure-report-success.png)
 
 ## Useful Commands
 
