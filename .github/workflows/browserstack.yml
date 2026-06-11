@@ -11,12 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
-    env:
-      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      BROWSERSTACK_APP_ID: ${{ secrets.BROWSERSTACK_APP_ID }}
-      BROWSERSTACK_BUILD_NAME: Pixel Clock GitHub Actions
-
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -34,6 +28,12 @@ jobs:
         run: npm run typecheck
 
       - name: Run Appium tests on BrowserStack
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          BROWSERSTACK_APP_ID: ${{ secrets.BROWSERSTACK_APP_ID }}
+          BROWSERSTACK_BUILD_NAME: Pixel Clock GitHub Actions
+          BROWSERSTACK_APPIUM_VERSION: 2.0.0
         run: npm run test:browserstack
 
       - name: Publish failed test details

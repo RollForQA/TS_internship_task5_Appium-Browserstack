@@ -48,6 +48,7 @@ export const config: WebdriverIO.Config = {
         projectName: 'TS Internship Appium',
         buildName: process.env.BROWSERSTACK_BUILD_NAME ?? 'Pixel Clock Appium',
         sessionName: 'Pixel Clock tests',
+        appiumVersion: process.env.BROWSERSTACK_APPIUM_VERSION ?? '2.0.0',
         debug: true,
         networkLogs: false
       }

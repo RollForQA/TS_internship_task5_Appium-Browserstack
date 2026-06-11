@@ -29,6 +29,22 @@ class StopwatchScreen {
     return $('id=com.google.android.deskclock:id/stopwatch_time_text');
   }
 
+  async waitForReady(): Promise<void> {
+    await browser.waitUntil(
+      async () => {
+        const timeIsVisible = await this.timeText.isDisplayed().catch(() => false);
+        const startIsVisible = await this.startButton.isDisplayed().catch(() => false);
+
+        return timeIsVisible && startIsVisible;
+      },
+      {
+        timeout: 20_000,
+        interval: 500,
+        timeoutMsg: 'Stopwatch controls did not become ready'
+      }
+    );
+  }
+
   async getElapsedDisplay(): Promise<string> {
     const timeText = this.timeText;
     await timeText.waitForDisplayed();

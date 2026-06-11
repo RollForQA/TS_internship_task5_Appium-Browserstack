@@ -11,6 +11,7 @@ Mobile automation test project for the native Android Pixel Clock app, built wit
 - Activity: `com.android.deskclock.DeskClock`
 - Local device: Android Emulator / Pixel 6 API 34
 - BrowserStack device: Samsung Galaxy S23 / Android 13.0
+- BrowserStack automation runtime: Appium 2.0.0
 
 The app was chosen because it is a native Android application with clear Alarm, Clock, Timer, and Stopwatch workflows. It does not require accounts, network access, or external test data.
 
@@ -88,6 +89,7 @@ The BrowserStack config reads credentials from environment variables. Do not com
 $env:BROWSERSTACK_USERNAME = "your_username"
 $env:BROWSERSTACK_ACCESS_KEY = "your_access_key"
 $env:BROWSERSTACK_APP_ID = "bs://your_app_id"
+$env:BROWSERSTACK_APPIUM_VERSION = "2.0.0"
 npm run test:browserstack
 ```
 
@@ -124,10 +126,10 @@ In CI, the generated Allure report is uploaded as a GitHub Actions artifact.
 
 ## Evidence
 
-- Latest verified GitHub Actions run for the committed suite: [BrowserStack Appium #12](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/runs/27340721469)
+- GitHub Actions workflow and current runs: [BrowserStack Appium](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/workflows/browserstack.yml)
 - Historical BrowserStack public build: [Pixel Clock GitHub Actions CI 27279688569](https://app-automate.browserstack.com/dashboard/v2/public-build/cVN3OXo4Q09hczdQQ1NoelV3b3E4d0dVTnAxMmlIUGt3VGZScktKRzE3Y3V5MTF0bGVsMHp6V0pPNGpUMWxxb2lkbzVmMEhIeW5Ed0NkcHZIV3E2bXc9PS0tb1hJOTIvZjRIUGpubEZra0V4bUt2Zz09--5645d76131c962564a608d8db339a87637b5388e)
 
-The GitHub Actions screenshot shows the latest successful BrowserStack run. The Allure screenshot was generated from a clean local emulator run with all five tests passing.
+The screenshots capture successful representative BrowserStack and local Allure runs of the same five-test suite.
 
 ![GitHub Actions and BrowserStack success](./docs/github-actions-success.png)
 

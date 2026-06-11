@@ -68,6 +68,7 @@ describe('Pixel Clock', () => {
 
   it('TC-05 records and resets a stopwatch lap', async () => {
     await navigationScreen.openStopwatch();
+    await stopwatchScreen.waitForReady();
     const initialDisplay = await stopwatchScreen.getElapsedDisplay();
     await stopwatchScreen.startButton.click();
 
