@@ -29,17 +29,9 @@ class StopwatchScreen {
     return $('id=com.google.android.deskclock:id/stopwatch_time_text');
   }
 
-  get hundredthsText() {
-    return $('id=com.google.android.deskclock:id/stopwatch_hundredths_text');
-  }
-
   async getElapsedDisplay(): Promise<string> {
     await this.timeText.waitForDisplayed();
-
-    return [
-      await this.timeText.getText(),
-      await this.hundredthsText.getText()
-    ].join('|');
+    return this.timeText.getText();
   }
 
   async waitForElapsedTimeChange(initialDisplay: string): Promise<string> {

@@ -28,9 +28,9 @@ describe('Pixel Clock', () => {
     await alarmScreen.createAlarm('Appium alarm');
 
     await expect(alarmScreen.label('Appium alarm')).toBeDisplayed();
-    const alarmTime = await alarmScreen.getAlarmTimeDescription();
-    expect(/(?:3:00\s*PM|15:00)/i.test(alarmTime)).toBe(true);
-    expect(await alarmScreen.isAlarmEnabled()).toBe(true);
+    const alarmTime = await alarmScreen.getAlarmTimeDescription('Appium alarm');
+    expect(/(?:3:00PM|15:00)/i.test(alarmTime.replace(/\s/gu, ''))).toBe(true);
+    expect(await alarmScreen.isAlarmEnabled('Appium alarm')).toBe(true);
   });
 
   it('TC-03 edits an alarm label', async () => {

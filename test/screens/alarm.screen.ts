@@ -14,14 +14,6 @@ class AlarmScreen {
     return $('id=android:id/button1');
   }
 
-  get alarmTime() {
-    return $('id=com.google.android.deskclock:id/digital_clock');
-  }
-
-  get alarmToggle() {
-    return $('id=com.google.android.deskclock:id/onoff');
-  }
-
   async createAlarm(label: string): Promise<void> {
     await navigationScreen.openAlarm();
     await this.addAlarmButton.waitForDisplayed();
@@ -62,19 +54,25 @@ class AlarmScreen {
     await this.label(label).waitForDisplayed();
   }
 
-  async getAlarmTimeDescription(): Promise<string> {
-    await this.alarmTime.waitForDisplayed();
+  async getAlarmTimeDescription(label: string): Promise<string> {
+    const alarmTime = this.alarmCard(label).$(
+      'id=com.google.android.deskclock:id/digital_clock'
+    );
+    await alarmTime.waitForDisplayed();
 
-    const text = await this.alarmTime.getText();
+    const text = await alarmTime.getText();
     const contentDescription =
-      (await this.alarmTime.getAttribute('content-desc')) ?? '';
+      (await alarmTime.getAttribute('content-desc')) ?? '';
 
     return `${text} ${contentDescription}`.trim();
   }
 
-  async isAlarmEnabled(): Promise<boolean> {
-    await this.alarmToggle.waitForDisplayed();
-    return (await this.alarmToggle.getAttribute('checked')) === 'true';
+  async isAlarmEnabled(label: string): Promise<boolean> {
+    const alarmToggle = this.alarmCard(label).$(
+      'id=com.google.android.deskclock:id/onoff'
+    );
+    await alarmToggle.waitForDisplayed();
+    return (await alarmToggle.getAttribute('checked')) === 'true';
   }
 
   async editLabel(currentLabel: string, updatedLabel: string): Promise<void> {
@@ -88,6 +86,12 @@ class AlarmScreen {
 
   label(value: string) {
     return $(`android=new UiSelector().text("${value}")`);
+  }
+
+  private alarmCard(label: string) {
+    return $(
+      `android=new UiSelector().descriptionContains(${JSON.stringify(label)})`
+    );
   }
 }
 
