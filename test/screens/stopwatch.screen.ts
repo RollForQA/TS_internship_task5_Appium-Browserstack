@@ -33,37 +33,22 @@ class StopwatchScreen {
     return $('id=com.google.android.deskclock:id/stopwatch_hundredths_text');
   }
 
-  async getElapsedMilliseconds(): Promise<number> {
+  async getElapsedDisplay(): Promise<string> {
     await this.timeText.waitForDisplayed();
 
-    const timeParts = ((await this.timeText.getText()).match(/\d+/g) ?? []).map(
-      Number
-    );
-    const hundredths =
-      Number((await this.hundredthsText.getText()).match(/\d+/)?.[0] ?? 0) %
-      100;
-
-    if (timeParts.length < 2 || timeParts.length > 3) {
-      throw new Error(
-        `Could not parse stopwatch time from "${await this.timeText.getText()}"`
-      );
-    }
-
-    const [hours, minutes, seconds] =
-      timeParts.length === 3
-        ? timeParts
-        : [0, timeParts[0], timeParts[1]];
-
-    return ((hours * 60 + minutes) * 60 + seconds) * 1_000 + hundredths * 10;
+    return [
+      await this.timeText.getText(),
+      await this.hundredthsText.getText()
+    ].join('|');
   }
 
-  async waitForElapsedTimeAbove(minimumMilliseconds: number): Promise<number> {
-    let elapsedMilliseconds = 0;
+  async waitForElapsedTimeChange(initialDisplay: string): Promise<string> {
+    let elapsedDisplay = initialDisplay;
 
     await browser.waitUntil(
       async () => {
-        elapsedMilliseconds = await this.getElapsedMilliseconds();
-        return elapsedMilliseconds > minimumMilliseconds;
+        elapsedDisplay = await this.getElapsedDisplay();
+        return elapsedDisplay !== initialDisplay;
       },
       {
         timeout: 5_000,
@@ -72,29 +57,13 @@ class StopwatchScreen {
       }
     );
 
-    return elapsedMilliseconds;
+    return elapsedDisplay;
   }
 
-  async getFirstLapMilliseconds(): Promise<number> {
+  async hasNonZeroFirstLapTime(): Promise<boolean> {
     await this.firstLapTime.waitForDisplayed();
-    const parts = ((await this.firstLapTime.getText()).match(/\d+/g) ?? []).map(
-      Number
-    );
-
-    if (parts.length < 3 || parts.length > 4) {
-      throw new Error(
-        `Could not parse lap time from "${await this.firstLapTime.getText()}"`
-      );
-    }
-
-    const hundredths = parts.at(-1) ?? 0;
-    const wholeTime = parts.slice(0, -1);
-    const [hours, minutes, seconds] =
-      wholeTime.length === 3
-        ? wholeTime
-        : [0, wholeTime[0], wholeTime[1]];
-
-    return ((hours * 60 + minutes) * 60 + seconds) * 1_000 + hundredths * 10;
+    const digits = (await this.firstLapTime.getText()).match(/\d/g) ?? [];
+    return digits.some((digit) => digit !== '0');
   }
 }
 

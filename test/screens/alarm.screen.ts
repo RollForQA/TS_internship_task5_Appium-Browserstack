@@ -15,11 +15,11 @@ class AlarmScreen {
   }
 
   get alarmTime() {
-    return $('id=com.google.android.deskclock:id/alarm_item_time');
+    return $('id=com.google.android.deskclock:id/digital_clock');
   }
 
   get alarmToggle() {
-    return $('id=com.google.android.deskclock:id/alarm_toggle');
+    return $('id=com.google.android.deskclock:id/onoff');
   }
 
   async createAlarm(label: string): Promise<void> {

@@ -68,30 +68,31 @@ describe('Pixel Clock', () => {
 
   it('TC-05 records and resets a stopwatch lap', async () => {
     await navigationScreen.openStopwatch();
+    const initialDisplay = await stopwatchScreen.getElapsedDisplay();
     await stopwatchScreen.startButton.click();
 
     await expect(stopwatchScreen.pauseButton).toBeDisplayed();
     await expect(stopwatchScreen.lapButton).toBeDisplayed();
     await expect(stopwatchScreen.resetButton).toBeDisplayed();
     await expect(stopwatchScreen.startButton).not.toExist();
-    expect(await stopwatchScreen.waitForElapsedTimeAbove(0)).toBeGreaterThan(0);
+    expect(
+      await stopwatchScreen.waitForElapsedTimeChange(initialDisplay)
+    ).not.toBe(initialDisplay);
 
     await stopwatchScreen.lapButton.click();
     await expect(stopwatchScreen.firstLap).toBeDisplayed();
-    expect(await stopwatchScreen.getFirstLapMilliseconds()).toBeGreaterThan(0);
+    expect(await stopwatchScreen.hasNonZeroFirstLapTime()).toBe(true);
 
     await stopwatchScreen.pauseButton.click();
     await expect(stopwatchScreen.startButton).toBeDisplayed();
     await expect(stopwatchScreen.pauseButton).not.toExist();
-    const pausedMilliseconds = await stopwatchScreen.getElapsedMilliseconds();
+    const pausedDisplay = await stopwatchScreen.getElapsedDisplay();
     await browser.pause(500);
-    expect(await stopwatchScreen.getElapsedMilliseconds()).toBe(
-      pausedMilliseconds
-    );
+    expect(await stopwatchScreen.getElapsedDisplay()).toBe(pausedDisplay);
 
     await stopwatchScreen.resetButton.click();
     await expect(stopwatchScreen.startButton).toBeDisplayed();
     await expect(stopwatchScreen.firstLap).not.toExist();
-    expect(await stopwatchScreen.getElapsedMilliseconds()).toBe(0);
+    expect(await stopwatchScreen.getElapsedDisplay()).toBe(initialDisplay);
   });
 });
