@@ -56,12 +56,29 @@ Check TypeScript:
 npm run typecheck
 ```
 
-For a local emulator run, start an Android emulator or connect a device, then verify it:
+For a local emulator run, start an Android emulator or connect a device, then verify it. Pixel emulators normally include Google Clock, so no APK path is required:
 
 ```powershell
 adb devices -l
 npm run test:local
 ```
+
+To select a specific connected device:
+
+```powershell
+$env:ANDROID_DEVICE_NAME = "Pixel_6_API_34"
+$env:ANDROID_UDID = "emulator-5554"
+npm run test:local
+```
+
+For an emulator without Google Clock, place an installable APK at `apps/pixel-clock.apk`. APK files are intentionally ignored by Git. Set the path before running so Appium installs it:
+
+```powershell
+$env:ANDROID_APP_PATH = "$PWD\apps\pixel-clock.apk"
+npm run test:local
+```
+
+The local configuration pins the app language and locale to English/US because several native accessibility labels are locale-dependent.
 
 ## BrowserStack Run
 
@@ -74,6 +91,16 @@ $env:BROWSERSTACK_APP_ID = "bs://your_app_id"
 npm run test:browserstack
 ```
 
+If the app has not been uploaded yet, upload the ignored local APK and copy the returned `app_url` value into `BROWSERSTACK_APP_ID`:
+
+```powershell
+curl.exe -u "$env:BROWSERSTACK_USERNAME`:$env:BROWSERSTACK_ACCESS_KEY" `
+  -X POST "https://api-cloud.browserstack.com/app-automate/upload" `
+  -F "file=@apps/pixel-clock.apk"
+```
+
+BrowserStack removes uploaded apps 30 days after their last use. Re-upload the APK and update the secret if an old `bs://` identifier expires.
+
 Required GitHub repository secrets:
 
 - `BROWSERSTACK_USERNAME`
@@ -84,7 +111,7 @@ The GitHub Actions workflow runs on `main` pushes and can also be started manual
 
 ## Reports
 
-The project uses the WDIO spec reporter and Allure reporter.
+The project uses the WDIO spec reporter and Allure reporter. Existing `allure-results` are cleared automatically before each local or BrowserStack test command.
 
 Generate and open a local Allure report:
 
@@ -97,8 +124,10 @@ In CI, the generated Allure report is uploaded as a GitHub Actions artifact.
 
 ## Evidence
 
-- GitHub Actions run: [BrowserStack Appium #5](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/runs/27279688569)
-- BrowserStack public build: [Pixel Clock GitHub Actions CI 27279688569](https://app-automate.browserstack.com/dashboard/v2/public-build/cVN3OXo4Q09hczdQQ1NoelV3b3E4d0dVTnAxMmlIUGt3VGZScktKRzE3Y3V5MTF0bGVsMHp6V0pPNGpUMWxxb2lkbzVmMEhIeW5Ed0NkcHZIV3E2bXc9PS0tb1hJOTIvZjRIUGpubEZra0V4bUt2Zz09--5645d76131c962564a608d8db339a87637b5388e)
+- Latest verified GitHub Actions run for the committed suite: [BrowserStack Appium #7](https://github.com/RollForQA/TS_internship_task5_Appium-Browserstack/actions/runs/27281515047)
+- Example BrowserStack public build: [Pixel Clock GitHub Actions CI 27279688569](https://app-automate.browserstack.com/dashboard/v2/public-build/cVN3OXo4Q09hczdQQ1NoelV3b3E4d0dVTnAxMmlIUGt3VGZScktKRzE3Y3V5MTF0bGVsMHp6V0pPNGpUMWxxb2lkbzVmMEhIeW5Ed0NkcHZIV3E2bXc9PS0tb1hJOTIvZjRIUGpubEZra0V4bUt2Zz09--5645d76131c962564a608d8db339a87637b5388e)
+
+The screenshots below show an earlier successful cloud execution; use the links above for live status.
 
 ![GitHub Actions success](./docs/github-actions-success.png)
 

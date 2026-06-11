@@ -34,7 +34,7 @@ Steps:
 
 Expected result:
 
-- A new enabled alarm is created.
+- A new enabled alarm is created for 3:00 PM (15:00 in 24-hour format).
 - The `Appium alarm` label is visible in the alarm list.
 
 ## TC-03: Edit an Alarm Label
@@ -73,8 +73,10 @@ Expected result:
 - The setup value is 2 minutes.
 - While running, Pause, Reset, and remaining-time controls are visible.
 - The Start control is not available while the timer is running.
+- The remaining time decreases from the configured 2 minutes.
 - After pausing, Start and Reset controls are visible.
 - The Pause control is not available while the timer is paused.
+- The remaining time does not change while paused.
 
 ## TC-05: Record and Reset a Stopwatch Lap
 
@@ -94,7 +96,9 @@ Expected result:
 
 - Running controls include Pause, Lap, and Reset.
 - The Start control is not available while the stopwatch is running.
-- `Lap 1` is recorded.
+- The elapsed stopwatch time increases above zero.
+- `Lap 1` is recorded with a non-zero time.
 - Pausing displays the Start control.
 - The Pause control is not available while the stopwatch is paused.
-- Reset removes the recorded lap and returns the stopwatch to its initial state.
+- The elapsed time does not change while paused.
+- Reset removes the recorded lap and returns the stopwatch to zero.

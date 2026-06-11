@@ -1,4 +1,4 @@
-import { $ } from '@wdio/globals';
+import { $, browser } from '@wdio/globals';
 import { navigationScreen } from './navigation.screen.js';
 
 class AlarmScreen {
@@ -14,12 +14,32 @@ class AlarmScreen {
     return $('id=android:id/button1');
   }
 
+  get alarmTime() {
+    return $('id=com.google.android.deskclock:id/alarm_item_time');
+  }
+
+  get alarmToggle() {
+    return $('id=com.google.android.deskclock:id/alarm_toggle');
+  }
+
   async createAlarm(label: string): Promise<void> {
     await navigationScreen.openAlarm();
+    await this.addAlarmButton.waitForDisplayed();
     await this.addAlarmButton.click();
 
     const threePmOnTwelveHourClock = $(
       'android=new UiSelector().descriptionContains("3 o")'
+    );
+    const threePmOnTwentyFourHourClock = $('~15 hours');
+
+    await browser.waitUntil(
+      async () =>
+        (await threePmOnTwelveHourClock.isExisting()) ||
+        (await threePmOnTwentyFourHourClock.isExisting()),
+      {
+        timeout: 5_000,
+        timeoutMsg: 'Expected the alarm time picker to display hour controls'
+      }
     );
 
     if (await threePmOnTwelveHourClock.isExisting()) {
@@ -28,7 +48,7 @@ class AlarmScreen {
         'id=com.google.android.deskclock:id/material_clock_period_pm_button'
       ).click();
     } else {
-      await $('~15 hours').click();
+      await threePmOnTwentyFourHourClock.click();
     }
 
     await $('~0 minutes').click();
@@ -40,6 +60,21 @@ class AlarmScreen {
     await this.labelInput.setValue(label);
     await this.confirmLabelButton.click();
     await this.label(label).waitForDisplayed();
+  }
+
+  async getAlarmTimeDescription(): Promise<string> {
+    await this.alarmTime.waitForDisplayed();
+
+    const text = await this.alarmTime.getText();
+    const contentDescription =
+      (await this.alarmTime.getAttribute('content-desc')) ?? '';
+
+    return `${text} ${contentDescription}`.trim();
+  }
+
+  async isAlarmEnabled(): Promise<boolean> {
+    await this.alarmToggle.waitForDisplayed();
+    return (await this.alarmToggle.getAttribute('checked')) === 'true';
   }
 
   async editLabel(currentLabel: string, updatedLabel: string): Promise<void> {

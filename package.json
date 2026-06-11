@@ -4,7 +4,10 @@
   "private": true,
   "description": "Mobile automation tests for Pixel Clock using WebdriverIO, Appium, and TypeScript.",
   "scripts": {
+    "clean:allure": "node -e \"require('node:fs').rmSync('allure-results', { recursive: true, force: true })\"",
+    "pretest:local": "npm run clean:allure",
     "test:local": "wdio run ./wdio.local.conf.ts",
+    "pretest:browserstack": "npm run clean:allure",
     "test:browserstack": "wdio run ./wdio.browserstack.conf.ts",
     "appium": "appium",
     "appium:doctor": "appium driver doctor uiautomator2",
